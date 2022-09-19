@@ -1,5 +1,15 @@
 @import 'variable';
 
-h1 {
-    color: $primary-color;
+body {
+
+}
+
+a[href] {
+    text-decoration: none;
+
+}
+
+.block {
+    // display: flex;
+    // justify-content: flex-start;
 }
