@@ -9,6 +9,26 @@ a[href] {
 
 }
 
+.nav-bar {
+    display: flex;
+    justify-content: space-between;
+}
+
+.avatar-wrapper {
+
+    display: flex;
+    align-items: center;
+}
+
+.avatar{
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+   
+}
+
+
+
 .block {
     // display: flex;
     // justify-content: flex-start;

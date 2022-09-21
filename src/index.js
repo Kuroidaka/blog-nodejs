@@ -6,6 +6,7 @@ const app = express()
 const port = 3000
 const route = require('./routes')
 const db = require('./config/db')
+const methodOverride = require('method-override')
 
 const bodyParser = require('body-parser');
 app.use(
@@ -23,8 +24,15 @@ app.use(express.static(path.join(__dirname,'public')))
 // HTTP logger
 app.use(morgan('combined'))
 
+app.use(methodOverride('_method'))
+
 //template engine 
-app.engine('hbs', engine({extname: 'hbs'}))
+app.engine('hbs', engine({
+    extname: 'hbs',
+    helpers: {
+        sum: (a,b) => {return (a + b)}
+    }
+}))
 
 app.set('view engine', 'hbs')
 

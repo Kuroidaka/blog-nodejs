@@ -2,32 +2,34 @@
   <div class="container-fluid">
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 ">
+
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="/">Home</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/course/create">Create course</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown
+      
+        <li class="nav-item dropdown ">
+          <div class="avatar-wrapper">
+              <img class="avatar" src="https://scontent.fsgn13-4.fna.fbcdn.net/v/t39.30808-6/275182933_103500798956981_1767932502458221572_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=0vMthTZJZ7kAX_nZbbJ&_nc_ht=scontent.fsgn13-4.fna&oh=00_AT9trxOT2T1NfMavmV-MWJ5zQT-zkd95LGaKuK5RYSS9pA&oe=632D55BD" alt="avatar">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+               Account
           </a>
-          <ul class="dropdown-menu">
+           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><a class="dropdown-item" href="/course/create">Create course</a></li>
+            <li><a class="dropdown-item" href="/me/stored/course">My Courses</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
+            <li><a class="dropdown-item" href="#">Logout</a></li>
           </ul>
+
+          </div>
+         
         </li>
-        <li class="nav-item">
-          <a class="nav-link disabled">Disabled</a>
-        </li>
+
+        
+      
       </ul>
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
+   
     </div>
   </div>
 </nav>

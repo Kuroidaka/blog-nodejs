@@ -1,0 +1,78 @@
+<div class="m-4">
+
+    <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Price</th>
+      <th scope="col">Date Update</th>
+      <td></td>
+      <td></td>
+    </tr>
+  </thead>
+  <tbody>
+
+    {{#each course}}
+    <tr>
+      <th scope="row">{{sum @index 1}}</th>
+      <td>{{this.name}}</td>
+      <td>{{this.price}}</td>
+      <td>{{this.createdAt}}</td>    
+        <td> 
+           
+            <a href='/course/{{this._id}}/edit' class="btn btn-link">Update</a>
+            <a  class="btn btn-link delete-btn" data-bs-toggle="modal" data-bs-target="#deleteModal" data-id="{{this._id}}">Delete</a>
+            
+        </td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+
+<!-- Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel">Confirm Form</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Do you really want to delete this course?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-danger confirm-delete">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<form name="delete-form" method="POST" ></form>
+
+<script>
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const deleteForm = document.forms['delete-form']
+        const deleteBtns = document.querySelectorAll('.delete-btn')
+        const deleteConfirm = document.querySelector('.confirm-delete')
+
+        deleteBtns.forEach(deleteBtn => {
+            deleteBtn.onclick = function(e) {
+                deleteConfirm.onclick = function() {
+                deleteForm.action = `/course/`+ deleteBtn.dataset.id + '?_method=DELETE'
+                deleteForm.submit()
+
+                }
+
+            }
+        })
+
+
+    })
+
+</script>
