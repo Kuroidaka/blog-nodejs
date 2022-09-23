@@ -1,0 +1,173 @@
+<form class="m-4" name="wrapperForm" method="POST" action="/course/handle-form-actions">
+
+    <header  style="text-align: center; font-size: 1.5rem"><strong>LIST COURSE DELETED</strong></header>
+    <a href="/me/stored/course">Back</a>
+
+     <div class="all-action d-flex align-items-center" >
+
+
+    <div class="form-check">
+      <input id="select-course" class="form-check-input" type="checkbox"  value="">
+      <label class="form-check-label" for="select-course">
+          Select all
+      </label>
+    </div>
+
+  <select class="select-form form-select-sm m-4" aria-label="Default select example" name="action">
+    <option value="" selected >---Select action---</option>
+    <option name="forceDelete" value="forceDelete">Delete</option>
+    <option name="restore" value="restore">restore</option>
+    
+  </select>
+
+  <button type="button" class="btn btn-primary btn-sm action-active-btn disabled">Active action</button>
+
+
+  </div>
+
+    <table class="table">
+  <thead>
+    <tr>
+      <td></td>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Price</th>
+      <th scope="col">Date Delete</th>
+      <td></td>
+      <td></td>
+    </tr>
+  </thead>
+  <tbody>
+
+
+    {{#each course}}
+    <tr>
+      <td>
+        <input type="checkbox" name="courseIds[]" value="{{this._id}}">
+      </td>
+
+      <th scope="row">{{sum @index 1}}</th>
+      <td>{{this.name}}</td>
+      <td>{{this.price}}</td>
+      <td>{{this.deletedAt}}</td>    
+        <td> 
+           
+            <a href="" data-id="{{this._id}}" class="btn btn-link restore-btn">Restore</a>
+            <a href="" class="btn btn-link delete-btn" data-id="{{this._id}}" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</a>
+
+        </td>
+    </tr>
+    {{else}}
+    <tr>
+        <td colspan="6">Empty trash</td>
+    </tr>
+
+    {{/each}}
+  </tbody>
+</table>
+
+<!-- Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel">Confirm Form</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Do you really want to delete this course?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-danger confirm-delete">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</form>
+
+<form name="delete-form" method="POST" ></form>
+<form name="restore-form" method="POST" ></form>
+
+<script>
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const deleteForm = document.forms['delete-form']
+        const restoreForm = document.forms['restore-form']
+        const wrapperForm = document.forms['wrapperForm'] 
+        const deleteBtn = $('.delete-btn')  
+        const restoreBtn = $('.restore-btn')
+        const deleteConfirm = $('.confirm-delete')
+        const checkAll = $('#select-course')
+        var isCheckedAll = false
+        const checkBtn = $('input[name="courseIds[]"]')
+        const actionActiveBtn = $('.action-active-btn')
+
+
+            deleteBtn.click(function(e) {
+                const id = $(this).data('id')
+                //console.log(id)
+                deleteConfirm.click(function() {
+                deleteForm.action = `/course/`+ id + '/forceDestroy?_method=DELETE'
+                console.log(deleteForm.action)
+                deleteForm.submit()
+
+                })
+
+            })
+
+            restoreBtn.click(function(e) {
+                e.preventDefault()
+                const id = $(this).data('id')
+                console.log(id)
+                restoreForm.action = '/course/' + id + '/restore?_method=PATCH'
+                restoreForm.submit()
+            })
+
+          //check all click
+          checkAll.change(function() {
+            var isCheckedAll = $(this).prop('checked');
+
+              if(isCheckedAll) {
+                checkBtn.prop('checked', true)
+              }
+              else {
+                checkBtn.prop('checked', false)
+              }
+
+              if(isCheckedAll)
+              actionActiveBtn.removeClass('disabled')
+            else 
+                actionActiveBtn.addClass('disabled')
+
+          })
+
+          // check btn click
+
+          checkBtn.change(function() {
+            const checkBtnLength = checkBtn.length;
+            const checkedBtnLength = $('input[name="courseIds[]"]:checked').length  
+
+            if(checkedBtnLength !== checkBtnLength)
+                checkAll.prop('checked', false);
+            else 
+               checkAll.prop('checked', true);
+
+            if(checkedBtnLength > 0)
+              actionActiveBtn.removeClass('disabled')
+            else 
+                actionActiveBtn.addClass('disabled')
+          })
+
+
+
+        actionActiveBtn.click(function() {
+            wrapperForm.submit()
+
+        }) 
+
+    })
+
+</script>
